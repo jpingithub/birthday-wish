@@ -1,0 +1,76 @@
+.carousal-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  .carousal {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousal-item {
+    min-width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  .carousal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .carousal-container::before {
+    content: 'This is the message to be displayed';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;  /* Placeholder red for visual effect */
+    opacity: 0.5;           /* Semi-transparent red background */
+    z-index: 0;
+    animation: slide-in 3s ease-in-out infinite; /* Apply animation */
+  }
+  
+  @keyframes slide-in {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  .carousal-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    z-index: 1;
+    transition: background-color 0.3s ease;
+  }
+  
+  .carousal-button.prev {
+    left: 20px;
+  }
+  
+  .carousal-button.next {
+    right: 20px;
+  }
+  
+  .carousal-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  

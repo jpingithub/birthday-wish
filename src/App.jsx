@@ -1,9 +1,11 @@
+import Welcome from "./pages/Welcome";
+import '../src/styling/App.css'
 
 function App() {
   return (
-    <div className="App">
-     
-    </div>
+   <>
+   <Welcome/>
+   </>
   );
 }
 
