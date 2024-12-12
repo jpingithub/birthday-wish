@@ -4,6 +4,7 @@
     height: 100vh;
     margin: 0;
     overflow: hidden;
+    margin-bottom: 20px;
   }
   
   .carousal {

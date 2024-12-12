@@ -5,7 +5,7 @@ import '../styling/Welcome.css'
 
 const Welcome = () => {
   return (
-    <div className='welcome-page'>
+    <div>
         <HomeCarousal/>
     </div>
   )
