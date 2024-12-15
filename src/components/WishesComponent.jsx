@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
-import wishesData from '../data/wishesList.js'; 
+import React, { useEffect, useState } from 'react';
+import { allWishes, deleteAllWishes } from '../data/DB.js'; 
 
 const WishesComponent = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [wishes, setWishes] = useState([]);
   const itemsPerPage = 10;
+
+  const fetchWishes = async () => {
+    const allFetchedWishes = await allWishes(); 
+    setWishes(allFetchedWishes);
+  };
+
+  useEffect(() => {
+    fetchWishes();
+
+    const interval = setInterval(fetchWishes, 5000); 
+    return () => clearInterval(interval); 
+  }, []);
 
   const toggleModal = () => setShowModal(!showModal);
 
+  const handleDeleteAllWishes = async () => {
+    await deleteAllWishes(); 
+    fetchWishes(); 
+  };
+
   const indexOfLastWish = currentPage * itemsPerPage;
   const indexOfFirstWish = indexOfLastWish - itemsPerPage;
-  const currentWishes = wishesData.slice(indexOfFirstWish, indexOfLastWish);
+  const currentWishes = wishes.slice(indexOfFirstWish, indexOfLastWish); 
 
-  const totalPages = Math.ceil(wishesData.length / itemsPerPage);
+  const totalPages = Math.ceil(wishes.length / itemsPerPage);
 
   const handlePagination = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -33,7 +51,7 @@ const WishesComponent = () => {
             <ul className="wishes-list">
               {currentWishes.map((wish) => (
                 <li key={wish.id}>
-                  <strong>{wish.id}. {wish.name} : </strong>{wish.wish}
+                  <strong>🎉 {wish.name} : </strong>{wish.wish}
                 </li>
               ))}
             </ul>
@@ -48,7 +66,10 @@ const WishesComponent = () => {
               </button>
             </div>
 
-            <button className="close-modal" onClick={toggleModal}>Close</button>
+            <div className="buttons">
+              <button className="close-modal" onClick={toggleModal}>Close</button>
+              <button className="close-modal" onClick={handleDeleteAllWishes}>Delete All Wishes</button>
+            </div>
           </div>
         </div>
       )}

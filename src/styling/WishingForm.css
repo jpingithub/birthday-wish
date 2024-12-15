@@ -1,0 +1,40 @@
+.wish-full-component{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.wish-full-component h2{
+    font-weight: bolder;
+    text-shadow: 1px 1px 2px crimson;
+}
+.wish-inputs-button{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+.wish-inputs-button input, .wish-inputs-button button{
+    height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    letter-spacing: 1.2px;
+    width: 80%;
+}
+.wish-inputs-button button{
+    width: 20%;
+    color: white;
+    background-color: #ff5c5c;
+    font-weight: bolder;
+    transition: all .2s linear;
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 2px black;
+    cursor: pointer;
+}
+.wish-inputs-button button:hover{
+    background-color: rgb(100, 162, 100);
+    width: 25%;
+}

@@ -5,6 +5,7 @@
   "dependencies": {
     "aos": "^2.3.4",
     "cra-template": "1.2.0",
+    "idb": "^8.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-scripts": "5.0.1"
