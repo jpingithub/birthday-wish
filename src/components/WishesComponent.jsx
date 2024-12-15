@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { allWishes, deleteAllWishes } from '../data/DB.js'; 
+import { allWishes } from '../data/DB.js'; 
 
 const WishesComponent = () => {
   const [showModal, setShowModal] = useState(false);
@@ -20,11 +20,6 @@ const WishesComponent = () => {
   }, []);
 
   const toggleModal = () => setShowModal(!showModal);
-
-  const handleDeleteAllWishes = async () => {
-    await deleteAllWishes(); 
-    fetchWishes(); 
-  };
 
   const indexOfLastWish = currentPage * itemsPerPage;
   const indexOfFirstWish = indexOfLastWish - itemsPerPage;
@@ -66,10 +61,7 @@ const WishesComponent = () => {
               </button>
             </div>
 
-            <div className="buttons">
               <button className="close-modal" onClick={toggleModal}>Close</button>
-              <button className="close-modal" onClick={handleDeleteAllWishes}>Delete All Wishes</button>
-            </div>
           </div>
         </div>
       )}

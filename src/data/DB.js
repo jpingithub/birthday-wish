@@ -24,11 +24,3 @@ export const allWishes = async () => {
   const db = await initDB();
   return await db.getAll('wishes');
 };
-
-// Delete all wishes
-export const deleteAllWishes = async () => {
-  const db = await initDB();
-  const transaction = db.transaction('wishes', 'readwrite');
-  const store = transaction.objectStore('wishes');
-  await store.clear(); // Clears all entries
-};

@@ -16,11 +16,6 @@
     border: none;
     outline: none;
   }
-  .buttons{
-    display: flex;
-    justify-content: center;
-    gap: 20%;
-  }
 
   .wishes-component:hover{
     transform: scale(1.2);
