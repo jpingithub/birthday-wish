@@ -1,0 +1,40 @@
+.welcome-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(to bottom, #121212, #1e1e1e); 
+    color: #ffffff; 
+    overflow: hidden;
+    padding: 20px;
+    transition: opacity 1s ease-in-out; 
+  }
+  
+  .welcome-container.fade-out {
+    opacity: 0;
+  }
+  
+  .welcome-message h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+    letter-spacing: 2px;
+    color: #00e5ff; 
+    text-shadow: 0px 0px 10px rgba(0, 229, 255, 0.7); 
+  }
+  
+  .welcome-subtext p {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    max-width: 600px;
+    line-height: 1.6;
+    color: #e0e0e0; 
+  }
+  
+  .confetti {
+    z-index: 10;
+  }
+  
