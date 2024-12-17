@@ -22,7 +22,7 @@ const Carousal = () => {
     <div className="carousal-container">
       <div className="carousal">
         <div className="carousal-item">
-          <img src={data[currentIndex].image} alt={`Slide ${data[currentIndex].id}`} className="carousal-image" />
+          <img id={currentIndex} src={data[currentIndex].image} alt={`Slide ${data[currentIndex].id}`} className="carousal-image" />
         </div>
       </div>
 
