@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { allWishes } from '../data/DB.js'; 
+import axios from 'axios';
 
 const WishesComponent = () => {
   const [showModal, setShowModal] = useState(false);
@@ -7,9 +7,17 @@ const WishesComponent = () => {
   const [wishes, setWishes] = useState([]);
   const itemsPerPage = 10;
 
+  // Read the base URL from environment variables
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+  // Fetch all wishes from the backend
   const fetchWishes = async () => {
-    const allFetchedWishes = await allWishes(); 
-    setWishes(allFetchedWishes);
+    try {
+      const response = await axios.get(BASE_URL);
+      setWishes(response.data);
+    } catch (error) {
+      console.error('Error fetching wishes:', error);
+    }
   };
 
   useEffect(() => {

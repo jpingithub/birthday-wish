@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
-import { addWish } from '../data/DB.js';
-import '../styling/WishingForm.css'
+import '../styling/WishingForm.css';
+import axios from 'axios';
 
 const Wishes = () => {
   const [name, setName] = useState('');
   const [wishText, setWishText] = useState('');
 
+  const BASE_URL = process.env.REACT_APP_BASE_URL;  
+
   const handleAddWish = async () => {
+    const newWish = {
+      name: name,
+      wish: wishText
+    };
     if (!name.trim() || !wishText.trim()) {
       alert('Please fill in both fields!');
       return;
     }
-    
-    try {
-      await addWish({ name, wish: wishText });
-      alert('Thank you for your wish/blessing!');
-      setName(''); 
-      setWishText('');
+    try{
+      await axios.post(BASE_URL, newWish);
+      alert('Thank you so much for your wish/blessing..!!')
+      setName('')
+      setWishText('')
     } catch (error) {
-      alert('There was an error adding your wish. Please try again.');
+      console.error('Error adding wish:', error);
     }
   };
   
