@@ -5,28 +5,35 @@ import axios from 'axios';
 const Wishes = () => {
   const [name, setName] = useState('');
   const [wishText, setWishText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);  // Loading state
 
-  const BASE_URL = process.env.REACT_APP_BASE_URL;  
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const handleAddWish = async () => {
     const newWish = {
       name: name,
-      wish: wishText
+      wish: wishText,
     };
+
     if (!name.trim() || !wishText.trim()) {
       alert('Please fill in both fields!');
       return;
     }
-    try{
+
+    setIsLoading(true);  
+
+    try {
       await axios.post(BASE_URL, newWish);
-      alert('Thank you so much for your wish/blessing..!!')
-      setName('')
-      setWishText('')
+      alert('Thank you so much for your wish/blessing..!!');
+      setName('');
+      setWishText('');
     } catch (error) {
       console.error('Error adding wish:', error);
+      alert('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);  
     }
   };
-  
 
   return (
     <div className='wish-full-component'>
@@ -44,8 +51,10 @@ const Wishes = () => {
           value={wishText}
           onChange={(e) => setWishText(e.target.value)}
         />
-        <button onClick={handleAddWish}>SUBMIT</button>
-      </div>
+        <button onClick={handleAddWish} disabled={isLoading}>
+          {isLoading ? <p className="loading">LOADING...</p> : <p>SUBMIT</p>}
+        </button>
+      </div> 
     </div>
   );
 };

@@ -16,14 +16,14 @@ const WishesComponent = () => {
     } catch (error) {
       console.error('Error fetching wishes:', error);
     }
-  }, [BASE_URL]); // Include BASE_URL as a dependency
+  }, [BASE_URL]); 
 
   useEffect(() => {
     fetchWishes();
 
     const interval = setInterval(fetchWishes, 5000);
     return () => clearInterval(interval);
-  }, [fetchWishes]); // Add fetchWishes as a dependency
+  }, [fetchWishes]); 
 
   const toggleModal = () => setShowModal(!showModal);
 
