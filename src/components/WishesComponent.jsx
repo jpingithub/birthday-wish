@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
 const WishesComponent = () => {
@@ -7,31 +7,29 @@ const WishesComponent = () => {
   const [wishes, setWishes] = useState([]);
   const itemsPerPage = 10;
 
-  // Read the base URL from environment variables
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  // Fetch all wishes from the backend
-  const fetchWishes = async () => {
+  const fetchWishes = useCallback(async () => {
     try {
       const response = await axios.get(BASE_URL);
       setWishes(response.data);
     } catch (error) {
       console.error('Error fetching wishes:', error);
     }
-  };
+  }, [BASE_URL]); // Include BASE_URL as a dependency
 
   useEffect(() => {
     fetchWishes();
 
-    const interval = setInterval(fetchWishes, 5000); 
-    return () => clearInterval(interval); 
-  }, []);
+    const interval = setInterval(fetchWishes, 5000);
+    return () => clearInterval(interval);
+  }, [fetchWishes]); // Add fetchWishes as a dependency
 
   const toggleModal = () => setShowModal(!showModal);
 
   const indexOfLastWish = currentPage * itemsPerPage;
   const indexOfFirstWish = indexOfLastWish - itemsPerPage;
-  const currentWishes = wishes.slice(indexOfFirstWish, indexOfLastWish); 
+  const currentWishes = wishes.slice(indexOfFirstWish, indexOfLastWish);
 
   const totalPages = Math.ceil(wishes.length / itemsPerPage);
 
@@ -69,7 +67,7 @@ const WishesComponent = () => {
               </button>
             </div>
 
-              <button className="close-modal" onClick={toggleModal}>Close</button>
+            <button className="close-modal" onClick={toggleModal}>Close</button>
           </div>
         </div>
       )}
