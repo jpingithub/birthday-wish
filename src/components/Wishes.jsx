@@ -5,7 +5,7 @@ import axios from 'axios';
 const Wishes = () => {
   const [name, setName] = useState('');
   const [wishText, setWishText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -20,7 +20,7 @@ const Wishes = () => {
       return;
     }
 
-    setIsLoading(true);  
+    setIsLoading(true);
 
     try {
       await axios.post(BASE_URL, newWish);
@@ -31,7 +31,7 @@ const Wishes = () => {
       console.error('Error adding wish:', error);
       alert('An error occurred. Please try again.');
     } finally {
-      setIsLoading(false);  
+      setIsLoading(false);
     }
   };
 
@@ -52,7 +52,11 @@ const Wishes = () => {
           onChange={(e) => setWishText(e.target.value)}
         />
         <button onClick={handleAddWish} disabled={isLoading}>
-          {isLoading ? <p className="loading">LOADING...</p> : <p>SUBMIT</p>}
+          {isLoading ? (
+            <div className="loading-spinner">LOADING...</div>
+          ) : (
+            <p>SUBMIT</p>
+          )}
         </button>
       </div> 
     </div>

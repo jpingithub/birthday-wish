@@ -2,32 +2,35 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
 const WishesComponent = () => {
-  const [showModal, setShowModal] = useState(false);  // Controls wishes modal
+  const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [wishes, setWishes] = useState([]);
   const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState(false); // To handle invalid password
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false); // Flag for password validation
+  const [passwordError, setPasswordError] = useState(false);
+  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const itemsPerPage = 10;
   const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const correctPassword = 'Nag1n@'; // Define the correct password here or fetch from a secure source
+  const correctPassword = 'Nag1n@';
 
   const fetchWishes = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(BASE_URL);
       setWishes(response.data);
     } catch (error) {
       console.error('Error fetching wishes:', error);
+    } finally {
+      setIsLoading(false);
     }
   }, [BASE_URL]);
 
   useEffect(() => {
-    fetchWishes();
-
-    const interval = setInterval(fetchWishes, 5000);
-    return () => clearInterval(interval);
-  }, [fetchWishes]);
+    if (isPasswordCorrect) {
+      fetchWishes();
+    }
+  }, [isPasswordCorrect, fetchWishes]);
 
   const toggleModal = () => setShowModal(!showModal);
 
@@ -35,16 +38,16 @@ const WishesComponent = () => {
     if (password === correctPassword) {
       setIsPasswordCorrect(true);
       setPasswordError(false);
-      setShowModal(true); // Open the wishes modal after password is correct
+      setShowModal(true);
     } else {
-      setPasswordError(true); // Show error if password is incorrect
+      setPasswordError(true);
     }
   };
 
   const handleCancelPassword = () => {
-    setPassword(''); // Clear the password input
-    setPasswordError(false); // Clear any error
-    setShowModal(false); // Close the password modal
+    setPassword('');
+    setPasswordError(false);
+    setShowModal(false);
   };
 
   const indexOfLastWish = currentPage * itemsPerPage;
@@ -65,7 +68,6 @@ const WishesComponent = () => {
         <span role="img" aria-label="wishes">🎉</span>
       </button>
 
-      {/* Password Modal */}
       {!isPasswordCorrect && showModal && (
         <div className="password-modal">
           <div className="password-modal-content">
@@ -83,18 +85,22 @@ const WishesComponent = () => {
         </div>
       )}
 
-      {/* Wishes Modal */}
       {isPasswordCorrect && showModal && (
         <div className="modal">
           <div className="modal-content">
             <h2>All Wishes</h2>
-            <ul className="wishes-list">
-              {currentWishes.map((wish) => (
-                <li key={wish.id}>
-                  <strong>🎉 {wish.name} : </strong>{wish.wish}
-                </li>
-              ))}
-            </ul>
+
+            {isLoading ? (
+              <p>Loading wishes...</p>
+            ) : (
+              <ul className="wishes-list">
+                {currentWishes.map((wish) => (
+                  <li key={wish.id}>
+                    <strong>🎉 {wish.name} : </strong>{wish.wish}
+                  </li>
+                ))}
+              </ul>
+            )}
 
             <div className="pagination">
               <button onClick={() => handlePagination(currentPage - 1)} disabled={currentPage === 1}>
