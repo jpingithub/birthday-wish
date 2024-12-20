@@ -11,7 +11,7 @@ const WishesComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const itemsPerPage = 10;
-  const BASE_URL = 'https://birthday-wishes-u5b6.onrender.com/v1/birthday/wishes';
+  const BASE_URL =  process.env.BACKEND_URL;
   const correctPassword = 'Nag1n@';
 
   const fetchWishes = useCallback(async () => {
