@@ -11,12 +11,14 @@ const WishesComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const itemsPerPage = 10;
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const BASE_URL = 'https://birthday-wishes-u5b6.onrender.com/v1/birthday/wishes';
   const correctPassword = 'Nag1n@';
 
   const fetchWishes = useCallback(async () => {
   setIsLoading(true);
   try {
+    console.log(BASE_URL);
+    
     const response = await axios.get(BASE_URL, {
       headers: { 'Content-Type': 'application/json' },
     });

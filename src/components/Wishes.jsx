@@ -7,7 +7,7 @@ const Wishes = () => {
   const [wishText, setWishText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const BASE_URL = 'https://birthday-wishes-u5b6.onrender.com/v1/birthday/wishes';
 
   const handleAddWish = async () => {
     const newWish = {
