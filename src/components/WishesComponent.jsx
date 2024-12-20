@@ -15,16 +15,18 @@ const WishesComponent = () => {
   const correctPassword = 'Nag1n@';
 
   const fetchWishes = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(BASE_URL);
-      setWishes(response.data);
-    } catch (error) {
-      console.error('Error fetching wishes:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [BASE_URL]);
+  setIsLoading(true);
+  try {
+    const response = await axios.get(BASE_URL, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    setWishes(response.data);
+  } catch (error) {
+    console.error('Error fetching wishes:', error.message);
+  } finally {
+    setIsLoading(false);
+  }
+}, [BASE_URL]);
 
   useEffect(() => {
     if (isPasswordCorrect) {
