@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 
 const WishesComponent = () => {
@@ -10,39 +10,39 @@ const WishesComponent = () => {
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const BASE_URL = 'https://birthday-wishes-u5b6.onrender.com/v1/birthday/wishes';
   const correctPassword = 'Nag1n@';
 
   const fetchWishes = useCallback(async () => {
-  setIsLoading(true);
-  try {
-    console.log(BASE_URL);
-    
-    const response = await axios.get(BASE_URL, {
-      headers: { 'Content-Type': 'application/json' },
-    });
-    setWishes(response.data);
-  } catch (error) {
-    console.error('Error fetching wishes:', error.message);
-  } finally {
-    setIsLoading(false);
-  }
-}, [BASE_URL]);
+    setIsLoading(true);
+    try {
+      const response = await axios.get(BASE_URL, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      setWishes(response.data);
+    } catch (error) {
+      console.error('Error fetching wishes:', error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [BASE_URL]);
 
-  useEffect(() => {
-    if (isPasswordCorrect) {
+  const toggleModal = () => {
+    const newState = !showModal;
+    setShowModal(newState);
+
+    if (newState && isPasswordCorrect) {
       fetchWishes();
     }
-  }, [isPasswordCorrect, fetchWishes]);
-
-  const toggleModal = () => setShowModal(!showModal);
+  };
 
   const handlePasswordSubmit = () => {
     if (password === correctPassword) {
       setIsPasswordCorrect(true);
       setPasswordError(false);
       setShowModal(true);
+      fetchWishes(); 
     } else {
       setPasswordError(true);
     }
@@ -66,6 +66,15 @@ const WishesComponent = () => {
     }
   };
 
+  const toPascalCase = (str) => {
+    return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+  
+  
+
   return (
     <div>
       <button className="wishes-component" onClick={toggleModal}>
@@ -75,7 +84,7 @@ const WishesComponent = () => {
       {!isPasswordCorrect && showModal && (
         <div className="password-modal">
           <div className="password-modal-content">
-            <h2>Only druva knows this password !!!</h2>
+            <h2>Only Druva knows this password !!!</h2>
             <input
               type="password"
               value={password}
@@ -84,7 +93,7 @@ const WishesComponent = () => {
             />
             {passwordError && <p style={{ color: 'red' }}>Incorrect password. Please try again.</p>}
             <button onClick={handlePasswordSubmit}>Submit</button>
-            <button style={{backgroundColor:'red'}} onClick={handleCancelPassword}>Cancel</button> 
+            <button style={{ backgroundColor: 'red' }} onClick={handleCancelPassword}>Cancel</button>
           </div>
         </div>
       )}
@@ -95,12 +104,12 @@ const WishesComponent = () => {
             <h2>All Wishes</h2>
 
             {isLoading ? (
-              <p>Loading wishes...</p>
+              <p className='loading-wishes'>Loading wishes...</p>
             ) : (
               <ul className="wishes-list">
                 {currentWishes.map((wish) => (
                   <li key={wish.id}>
-                    <strong>🎉 {wish.name} : </strong>{wish.wish}
+                    <strong>🎉 {toPascalCase(wish.name)} : </strong>{wish.wish}
                   </li>
                 ))}
               </ul>

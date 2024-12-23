@@ -36,6 +36,12 @@
     cursor: pointer;
     transition: all .2s linear;
 }
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin: 5px 0;
+  }
+  
 .wish-inputs-button button:hover{
     background-color: rgb(100, 162, 100);
 }

@@ -148,6 +148,18 @@
 .close-modal:hover {
   background-color: #e60000;
 }
+.loading-wishes{
+  font-weight: bolder;
+  color: black;
+  animation: loadinAnimation 2s linear infinite alternate;
+}
+@keyframes loadinAnimation {
+  from{
+    color: black;
+  }to{
+    color: transparent;
+  }
+}
 
 body {
   background-color: #121212;
@@ -158,12 +170,8 @@ body::-webkit-scrollbar {
   width: 0;
 }
 
-/* Responsive */
 @media only screen and (max-width: 700px) {
   .carousal-container::before {
     font-size: 2.5rem;
   }
-  /* .wish-inputs-button button{
-    font-size: small;
-  } */
 }
