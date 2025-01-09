@@ -119,7 +119,7 @@ const WishesComponent = () => {
               <button onClick={() => handlePagination(currentPage - 1)} disabled={currentPage === 1}>
                 Previous
               </button>
-              <span>{currentPage} / {totalPages}</span>
+              <span>{currentPage} / {totalPages===0?1:totalPages}</span>
               <button onClick={() => handlePagination(currentPage + 1)} disabled={currentPage === totalPages}>
                 Next
               </button>
